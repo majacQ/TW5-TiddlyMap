@@ -47,6 +47,7 @@ class MapWidget extends Widget {
       'handleCanvasKeyup',
       'handleCanvasKeydown',
       'handleCanvasScroll',
+      'handleExtraCanvasScroll',
       'handleCanvasMouseMove',
       'handleWidgetKeyup',
       'handleWidgetKeydown',
@@ -413,7 +414,8 @@ class MapWidget extends Widget {
     });
 
     // register
-    this.sidebar = utils.getFirstElementByClassName('tc-sidebar-scrollable');
+    // fixes #422: sidebar isn't always there depending on installed plugins
+    this.sidebar = utils.getFirstElementByClassName('tc-sidebar-scrollable', undefined, false);
     this.isInSidebar = (this.sidebar
                                  && !this.domNode.isTiddlyWikiFakeDom
                                  && this.sidebar.contains(this.domNode));
@@ -1137,7 +1139,11 @@ class MapWidget extends Widget {
    * Solves: https://github.com/felixhayashi/TW5-TiddlyMap/issues/306
    */
   handleExtraCanvasScroll(ev) {
-    ev.preventDefault();
+
+    // Solves: https://github.com/felixhayashi/TW5-TiddlyMap/issues/409
+    if (this.isInSidebar) {
+      ev.preventDefault();
+    }
   }
 
   /**
@@ -2484,6 +2490,8 @@ class MapWidget extends Widget {
 
         utils.registerTransclude(this, 'tooltipWidget', tRef);
         this.tooltipWidget.setVariable('tv-tiddler-preview', 'yes');
+        // Solves: https://github.com/felixhayashi/TW5-TiddlyMap/issues/365
+        this.tooltipWidget.setVariable('currentTiddler', tRef);
         this.tooltipWidget.render(div);
 
       } else {

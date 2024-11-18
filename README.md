@@ -8,6 +8,8 @@ TiddlyMap is a TiddlyWiki plugin that turns your favourite personal note taking 
 Demo
 ---------------------------------------------------------------------
 
+**WARNING:** The demo site is no longer being maintained. The latest version of TiddlyMap is only available here on git. Look to "Releases" on the right.
+
 A demo with several examples and explanations can be found at the project's website [tiddlymap.org](http://tiddlymap.org). While TiddlyMap also works with mobile devices, it is written for larger screens (>= 1440px width), since concept mapping requires space.
 
 Motivation
@@ -57,14 +59,14 @@ This method requires you to have TiddlyWiki running as server using [Node.js](ht
 
   * [TiddlyMap](https://github.com/felixhayashi/TW5-TiddlyMap)
     * This is the core TiddlyMap plugin.
-  * [TW5-Vis.js](https://github.com/felixhayashi/TW5-Vis.js)
-    * This plugin will install vis.js which is required for the graph's rendering.
+  * [tw5-vis-network](https://github.com/flibbles/tw5-vis-network)
+    * This plugin will install vis-network which is required for the graph's rendering.
   * [TW5-HotZone](https://github.com/felixhayashi/TW5-HotZone)
     * This plugin is necessary when you want to use the live view.
   * [TW5-TopStoryView](https://github.com/felixhayashi/TW5-TopStoryView)
     * Unless you are using the zoomin or stacked story view, install this plugin to achieve a better live view experience.
 
-1. For every zip file, open the file and copy everything that lies in the zip's `dist/` path into `tiddlywiki/plugins/` (or create symlinks).
+1. For every zip file, open the file and copy everything that lies in the zip's `dist/` path (or `plugins/` path for vis-network) into `tiddlywiki/plugins/` (or create symlinks).
 
 Now in every wiki you want TiddlyMap to appear in, you need to update the plugin section of your wiki's `tiddlywiki.info` file, which resides in the root of your wiki, to contain the following:
 
@@ -72,9 +74,9 @@ Now in every wiki you want TiddlyMap to appear in, you need to update the plugin
 {
   "plugins": [
     "felixhayashi/tiddlymap",
-    "felixhayashi/vis",
     "felixhayashi/hotzone",
-    "felixhayashi/topstoryview"
+    "felixhayashi/topstoryview",
+    "flibbles/vis-network"
   ]
 }
 ```
@@ -84,7 +86,7 @@ Now in every wiki you want TiddlyMap to appear in, you need to update the plugin
 Build
 ---------------------------------------------------------------------
 
-If you want to compile your own TiddlyMap plugin from souce, follow the steps below.
+If you want to compile your own TiddlyMap plugin from source, follow the steps below.
 
 **Note:** In case you want to contribute code to the project, make sure you read [Contributing to TiddlyMap](https://github.com/felixhayashi/TW5-TiddlyMap/blob/master/CONTRIBUTING.md) and signed the CLA before creating a pull request.
 
@@ -115,6 +117,6 @@ The build produces a few folders, i.e. `docs`, `bundle`, `dist`, in the local re
 
 **Some tips:**
 
-* For a quick test of the build result drag & drop the `tiddlymap.json` file residing in the `bundle` folder into one of your wikis to install the compiled plugin. Of course you *need to make sure(!)* that this wiki also has all the plugins installed TiddlyMap depends on (most importantly [TW5-Vis.js](https://github.com/felixhayashi/TW5-Vis.js)). So for testing purposes, you could drag your compiled plugin into http://tiddlymap.org, which satisfies all dependencies already.
+* For a quick test of the build result drag & drop the `tiddlymap.json` file residing in the `bundle` folder into one of your wikis to install the compiled plugin. Of course you *need to make sure(!)* that this wiki also has all the plugins installed TiddlyMap depends on (most importantly [tw5-vis-network](https://github.com/flibbles/tw5-vis-network)). So for testing purposes, you could drag your compiled plugin into http://tiddlymap.org, which satisfies all dependencies already.
 * If you need to build and test TiddlyMap often, it makes sense to consider setting up "Option 2" (see installation instructions) using symlinks. So in your `tiddlywiki/plugins/` directory create symlinks to your local repository's dist folder.
 * To have the source code documentation displayed as website, open the `index.html` inside the `docs` folder. Please note: docs may be outdated or incomplete.

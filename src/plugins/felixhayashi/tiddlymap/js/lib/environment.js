@@ -32,6 +32,7 @@ export const path = {
   options:         '$:/plugins/felixhayashi/tiddlymap/config',
   dialogs:         '$:/plugins/felixhayashi/tiddlymap/dialog',
   footers:         '$:/plugins/felixhayashi/tiddlymap/dialogFooter',
+  nodeLabel:       '$:/plugins/felixhayashi/tiddlymap/templates/nodeLabel',
   tempRoot:        '$:/temp/tmap',
   tempStates:      '$:/temp/tmap/state',
   tempPopups:      '$:/temp/tmap/state/popup',
@@ -101,7 +102,7 @@ export const filter = {
   nodeTypes: `[prefix[${path.nodeTypes}]]`,
   edgeTypes: `[prefix[${path.edgeTypes}]]`,
   views: `[${config.sys.field.viewMarker}[true]]`,
-  defaultEdgeTypeFilter: '-[prefix[_]] -[[tw-body:link]] -[[tw-list:tags]] -[[tw-list:list]]'
+  defaultEdgeTypeFilter: '-[prefix[_]] -[[tw-body:link]] -[[tw-body:transclude]] -[[tw-list:tags]] -[[tw-list:list]]'
 };
 
 const allSelector = '[all[tiddlers+shadows]!has[draft.of]]';

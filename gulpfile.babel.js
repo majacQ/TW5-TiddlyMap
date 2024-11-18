@@ -76,17 +76,18 @@ import beep from 'beepbeep';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import babel from 'gulp-babel';
-import sass from 'gulp-sass';
+import libSass from 'sass';
+import gulpSass from 'gulp-sass';
 import replace from 'gulp-replace';
 import terser from 'gulp-terser';
 import jsdoc from 'gulp-jsdoc3';
 import esprima from 'gulp-esprima';
 import debug from 'gulp-debug';
 import bump from 'gulp-bump';
-import sourcemaps from 'gulp-sourcemaps';
 
 /**** Preprocessing ************************************************/
 
+const sass = gulpSass(libSass);
 const pluginSrc = './src/plugins/';
 const pluginNamespace = `${authorName}/${pluginName}`; // no trailing slash!
 const pluginTiddler = `$:/plugins/${pluginNamespace}`;
@@ -176,7 +177,7 @@ gulp.task('copy vanilla files', () => {
 gulp.task('compile and move styles', () => {
 
   const opts = {
-    outputStyle: (argv.production ? 'compressed' : 'nested'),
+    outputStyle: (argv.production ? 'compressed' : 'expanded'),
     sourceComments: false,
   };
 
@@ -207,16 +208,9 @@ gulp.task('compile and move scripts', () => {
     }
   };
 
-  const sourceMapOpts = {
-    destPath: outPath.maps,
-    sourceMappingURLPrefix: '.'
-  };
-
   return gulp.src(pluginSrc + '/**/*.js')
-    .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(gulpif (argv.production, terser(uglifyOpts)))
-    .pipe(sourcemaps.write('./maps', sourceMapOpts))
     .pipe(gulp.dest(outPath.dist));
 
 });
@@ -281,7 +275,7 @@ gulp.task('bundle the plugin', (cb) => {
   // write the json to the dist dir;
   // note: tw requires the json to be wrapped in an array, since
   // a collection of tiddlers are possible.
-  const outName = pluginName + '_' + pluginInfo.version + '.json';
+  const outName = pluginName + '.json';
   fs.writeFileSync(path.resolve(outPath.bundle, outName),
                    JSON.stringify([ plugin ], null, 2));
 

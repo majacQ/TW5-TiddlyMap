@@ -11,6 +11,7 @@ subtitle: {{$:/plugins/felixhayashi/tiddlymap/icon}} Edge type specification
 \end
 
 \define badges()
+\whitespace trim
 <$tiddler tiddler={{!!text}}>
 <$set name="id" value=<<tmap "getETyId" "$(view)$">>>
 <$set name="isVisible" value=<<tmap "isETyVisible" "$(view)$">>>
@@ -21,16 +22,20 @@ subtitle: {{$:/plugins/felixhayashi/tiddlymap/icon}} Edge type specification
   <<id>>
   </span>
   <$list filter="[<isVisible>regexp[true]]">
+    &#32;
     <<badge "green" "visible" "Matches your view's filter">>
   </$list>
   <$list filter="[<isVisible>regexp[false]]">
+    &#32;
     <<badge "red" "not visible" "Doesn't match your view's filter">>
   </$list>
   <$list filter="[<id>!regexp[^tmap:unknown$]]" variable="item">
     <$list filter="[<id>regexp[^_]]">
+      &#32;
       <<badge "purple" "private" "Not shown in other views per default">>
     </$list>
     <$list filter="[<id>regexp[.+:.+]]">
+      &#32;
       <<badge "orange" "namespace" "This type is prefixed with a proper namespace">>
     </$list>
   </$list>
@@ -41,6 +46,7 @@ subtitle: {{$:/plugins/felixhayashi/tiddlymap/icon}} Edge type specification
 \end
 
 \define search()
+\whitespace trim
 <p>
   You are about to connect "<$text text="$(fromLabel)$" />"
   with "<$text text="$(toLabel)$" />". Please specify a type.
@@ -54,10 +60,7 @@ subtitle: {{$:/plugins/felixhayashi/tiddlymap/icon}} Edge type specification
           field="text"
           type="text"
           tag="input"
-          default=""
-          class="tmap-trigger-field
-                 tmap-triggers-ok-button-on-enter
-                 tmap-triggers-cancel-button-on-esc" />
+          default="" />
       <<badges>>
     </td>
   </tr>
@@ -83,4 +86,8 @@ subtitle: {{$:/plugins/felixhayashi/tiddlymap/icon}} Edge type specification
 </table>
 \end
 
+<$keyboard key="enter" actions="<$action-setfield $tiddler=<<result>> text='1' />">
+<$keyboard key="escape" actions="<$action-setfield $tiddler=<<result>> text='' />">
 <$list filter="[<temp>!has[more]]" variable="item"><<search>></$list>
+</$keyboard>
+</$keyboard>
